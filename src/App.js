@@ -5,21 +5,12 @@ import Weather from "./weather";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="Main">
+        <h2>React Weather App</h2>
         <Weather />
       </header>
+      <a href="https://github.com/BonnieJeanAZ/Weather-App">Open-Source code</a>
+      <div>by Bonnie Runyan</div>
     </div>
   );
 }
