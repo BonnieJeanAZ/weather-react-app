@@ -10,8 +10,8 @@ function App() {
       </header>
       <a href="https://github.com/BonnieJeanAZ/weather-react-app">
         Open-Source code
-      </a>
-      <div>by Bonnie Runyan</div>
+      </a>{" "}
+      by Bonnie Runyan
     </div>
   );
 }
