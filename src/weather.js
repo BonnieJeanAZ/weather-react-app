@@ -1,6 +1,8 @@
 import React from "react";
 
-export default function weather(props) {
+import "./App.css";
+
+export default function weather() {
   return (
     <div className="Weather">
       <div className="row">
@@ -27,6 +29,7 @@ export default function weather(props) {
           <img
             class="img-fluid rounded mx-auto d-block"
             src="https://uxwing.com/wp-content/themes/uxwing/download/weather/weather-icon.png"
+            alt="weather-logo"
           />
         </div>
         <div className="col-4">
