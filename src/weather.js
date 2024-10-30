@@ -2,7 +2,7 @@ import React from "react";
 
 import "./App.css";
 
-export default function weather() {
+export default function Weather() {
   return (
     <div className="Weather">
       <div className="row">
