@@ -1,47 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
+import WeatherInfo from "./WeatherInfo";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
 
 import "./App.css";
 
-export default function Weather() {
-  return (
-    <div className="Weather">
-      <div className="row">
-        <div className="col-9">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Enter a city.."
-            onChange=""
-          />
-        </div>
-        <div className="col-3">
-          <button type="Submit" class="btn btn-outline-info">
-            Search
-          </button>
-        </div>
+export default function Weather(props) {
+  const [weatherData, setWeatherData] = useState({ ready: false });
+  const [city, setCity] = useState(props.defaultCity);
+
+  function handleResponse(response) {
+    setWeatherData({
+      ready: true,
+      coordinates: response.data.coordinates,
+      temperature: response.data.temperature.current,
+      humidity: response.data.temperature.humidity,
+      date: new Date(response.data.time * 1000),
+      description: response.data.condition.description,
+      icon: response.data.condition.icon_url,
+      city: response.data.city,
+      wind: response.data.wind.speed,
+    });
+  }
+
+  function search() {
+    const apiKey = "55ca6oet30d44eb41255b7966f2f9da0";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+
+  function handleCityChange(event) {
+    setCity(event.target.value);
+  }
+
+  if (weatherData.ready) {
+    return (
+      <div className="Weather">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-9">
+              <input
+                type="search"
+                placeholder="Enter a city.."
+                className="form-control"
+                autoFocus="on"
+                onChange={handleCityChange}
+              />
+            </div>
+            <div className="col-3">
+              <input
+                type="submit"
+                value="Search"
+                className="btn btn-primary w-100"
+              />
+            </div>
+          </div>
+        </form>
+        <WeatherInfo data={weatherData} />
       </div>
-      <div className="row">
-        <div className="col-4">
-          <h1>New York</h1>
-          <h2>62°F | °C</h2>
-        </div>
-        <div className="col-4">
-          <img
-            class="img-fluid rounded mx-auto d-block"
-            src="https://uxwing.com/wp-content/themes/uxwing/download/weather/weather-icon.png"
-            alt="weather-logo"
-          />
-        </div>
-        <div className="col-4">
-          <ul>
-            <li>Wednesday 7:00</li>
-            <li>Mostly Cloudy</li>
-            <li>Precipitation: 9%</li>
-            <li>Humidity: 77%</li>
-            <li>Wind: 5mph</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  } else {
+    search();
+    return "Loading...";
+  }
 }
